@@ -6,12 +6,14 @@ function SingleTaskView({task}) {
           </section>
         );
       }
+
+      let priorities = ["Low", "Medium", "High"]
     
       return (
         <section>
           <article className="task">
             <h2>{task.content}</h2>
-            <p className="task-title">{task.content}</p>
+            <p>Priority: {priorities[task.priority - 1]}</p>
           </article>
         </section>
       );
