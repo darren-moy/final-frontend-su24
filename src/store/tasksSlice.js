@@ -29,7 +29,8 @@ export const fetchTasks = () => async (dispatch) => {
 
 export const deleteTask = taskId => async dispatch => {
   try {
-    await axios.delete(`${PATH}/${taskId}`);
+    console.log("Deleting task with id: ", taskId)
+    await axios.delete(`${PATH}/tasks/${taskId}`);
     //delete succesful so change state with dispatch
     dispatch({type: 'tasks/taskDeleted', payload: taskId});
   } catch(err) {
