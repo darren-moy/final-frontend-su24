@@ -3,7 +3,7 @@ import './styles/all-tasks.css';
 let ulStyle = {
   border: "3px solid #0d0",
   width: "70%",
-  margin: "auto",
+  margin: "0 auto",
   overflow: "auto",
 };
 
@@ -20,19 +20,21 @@ let liStyleLastChild = {
 
 import { Link } from "react-router-dom";
 
-function AllTasksView({tasks, deleteTask}) {
+function AllTasksView({ tasks, deleteTask}) {
 
   if (!tasks.length) {
     return (
       <>
         <Link to={`/`}><button>Back to Home</button></Link>
+        <Link to={`/tasks/new`}><button>Add Task</button></Link>
         <div>There are no tasks.</div>
       </>
     );
   }
   return (
-    <div id="bgview" style={{display: "flex", flexDirection: "column", paddingBottom: "16px"}} >
+    <div id="bgview" style={{display: "flex", flexDirection: "column", paddingBottom: "8px", width: "400px"}} >
       <Link to={`/`}><button style={{margin: "8px"}}>Back to Home</button></Link>
+      <Link to={`/tasks/new`}><button style={{margin: "8px"}}>Add Task</button></Link>
       <div style={ulStyle}>
         {tasks.map((todo, idx) => {
           let styleBool = idx === tasks.length - 1 ? liStyleLastChild : liStyle;
