@@ -1,35 +1,28 @@
 import NewTaskView from "../views/NewTaskView";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
 import { addTask } from "../../store/tasksSlice";
+import { fetchEmployees } from '../../store/employeesSlice'
 
 function NewTaskContainer() {
-    const dispatch = useDispatch();
-    const handleSubmit = (e) => {
-        // Prevent server submission
-        e.preventDefault()
-        const form = e.target;
-        const formData = new FormData(form);
-        const formJson = Object.fromEntries(formData.entries());
-        console.log(formJson);
+  const employees = useSelector((state) => state.employees);
+  const dispatch = useDispatch();
 
-        const { elements } = e.currentTarget
-        const userInput = elements.taskContent.value
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, [dispatch]);
 
-        // Create the task object and dispatch the `addTask` thunk
-        const newTask = {
-            content: formJson.taskContent,
-            priority: parseInt(formJson, taskPriority),
-        };
-        console.log(newTask);
-        dispatch(addTask(newTask));
-
-        e.currentTarget.reset();
+  const handleSubmit = async (task) => {
+    try {
+      await dispatch(addTask(task));
+    } catch (err) {
+      console.error(err);
     }
+  }
 
-    return (
-        <NewTaskView handleSubmit={handleSubmit}/>
-    );
-
+  return (
+    <NewTaskView handleSubmit={handleSubmit} employees={employees} />
+  );
 }
 
 export default NewTaskContainer;
