@@ -1,7 +1,7 @@
 import AllEmployeesView from "../views/AllEmployeesView";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEmployees } from "../../store/employeesSlice";
+import { fetchEmployees, deleteEmployee } from "../../store/employeesSlice";
 
 function AllEmployeesContainer() {
     const employees = useSelector((state) => state.employees);
@@ -10,11 +10,14 @@ function AllEmployeesContainer() {
     useEffect(() => {
         dispatch(fetchEmployees());
       }, [dispatch]);
-    
-    return (
-       <AllEmployeesView employees={employees} />
-    );
 
+    const handleDelete = (employeeId) => {
+        dispatch(deleteEmployee(employeeId));
+    };
+
+    return (
+       <AllEmployeesView employees={employees} deleteEmployee={handleDelete} />
+    );
 }
 
 export default AllEmployeesContainer;
