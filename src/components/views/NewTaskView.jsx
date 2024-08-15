@@ -5,6 +5,7 @@ function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
   const [taskContent, setTaskContent] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
   const [employeeId, setEmployeeId] = useState(prefilledEmployeeId || "null");
+  const [completed, setCompleted] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -30,10 +31,12 @@ function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
         content: taskContent,
         taskPriority: parseInt(taskPriority),
         employeeId: employeeId !== "null" ? parseInt(employeeId) : null,
+        completed,
       });
       setTaskContent("");
       setTaskPriority("");
       setEmployeeId("null");
+      setCompleted(false);
       setErrors({});
     }
   };
@@ -94,6 +97,18 @@ function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
             })}
           </select>
         </label>
+        <br />
+        <label>
+          Completion Status:
+          <select
+            value={completed ? "completed" : "incomplete"}
+            onChange={(e) => setCompleted(e.target.value === "completed")}
+          >
+            <option value="incomplete">Incomplete</option>
+            <option value="completed">Completed</option>
+          </select>
+        </label>
+        <br />
         <button type="submit">Save Task</button>
       </form>
       <br />
