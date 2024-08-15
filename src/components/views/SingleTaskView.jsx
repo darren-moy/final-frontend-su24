@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function SingleTaskView({ task, handleSubmit, employees, errors }) {
@@ -7,22 +7,50 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
     const [taskPriority, setTaskPriority] = useState(task?.priority?.toString() || "1");
     const [employeeId, setEmployeeId] = useState(task?.employeeId ? task.employeeId.toString() : "null");
     const [completed, setCompleted] = useState(task?.completed || false);
+    const [currentEmployee, setCurrentEmployee] = useState(task?.employee || null);
+    const [validationErrors, setValidationErrors] = useState({});
 
     const navigate = useNavigate();
     const location = useLocation();
     const fromEmployee = location.state?.fromEmployee;
 
+    const validateForm = () => {
+        const newErrors = {};
+        if (!taskContent.trim()) {
+            newErrors.taskContent = "Task description is required and cannot be empty.";
+        }
+        return newErrors;
+    };
+
     const onSubmit = (e) => {
         e.preventDefault();
-        handleSubmit({ 
-            id: task.id, 
-            content: taskContent, 
-            priority: parseInt(taskPriority), 
-            employeeId: employeeId !== "null" ? parseInt(employeeId) : null,
-            completed
-        });
-        setEditMode(false);
+        const formErrors = validateForm();
+        if (Object.keys(formErrors).length > 0) {
+            setValidationErrors(formErrors);
+        } else {
+            const updatedTask = {
+                id: task.id,
+                content: taskContent.trim(),
+                priority: parseInt(taskPriority),
+                employeeId: employeeId !== "null" ? parseInt(employeeId) : null,
+                completed
+            };
+            handleSubmit(updatedTask);
+            const assignedEmployee = employees.find(emp => emp.id === updatedTask.employeeId);
+            setCurrentEmployee(assignedEmployee || null);
+            setEditMode(false);
+        }
     };
+
+    useEffect(() => {
+        if (task?.employeeId) {
+            const assignedEmployee = employees.find(emp => emp.id === task.employeeId);
+            if (assignedEmployee) {
+                setEmployeeId(task.employeeId.toString());
+                setCurrentEmployee(assignedEmployee);
+            }
+        }
+    }, [task, employees]);
 
     if (!task) {
         return (
@@ -48,7 +76,7 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                                 value={taskContent}
                                 onChange={(e) => setTaskContent(e.target.value)} 
                             />
-                            {errors.taskContent && <p style={{ color: 'red' }}>{errors.taskContent}</p>}
+                            {validationErrors.taskContent && <p style={{ color: 'red' }}>{validationErrors.taskContent}</p>}
                         </label>
                         <p> Priority level:
                             {priorities.map((priority, index) => (
@@ -61,7 +89,7 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                                     /> {priority}
                                 </label>
                             ))}
-                            {errors.taskPriority && <p style={{ color: 'red' }}>{errors.taskPriority}</p>}
+                            {validationErrors.taskPriority && <p style={{ color: 'red' }}>{validationErrors.taskPriority}</p>}
                         </p>
                         <label> Assign employee (optional):
                             <select 
@@ -93,9 +121,9 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                         <h2>{task.content}</h2>
                         <p>Priority: {priorities[task.priority - 1]}</p>
                         <p>Assigned to: 
-                            {task.employee ? (
-                                <Link to={`/employees/${task.employee.id}`}>
-                                    {task.employee.firstname} {task.employee.lastname}
+                            {currentEmployee ? (
+                                <Link to={`/employees/${currentEmployee.id}`}>
+                                    {currentEmployee.firstname} {currentEmployee.lastname}
                                 </Link>
                             ) : (
                                 " Unassigned"

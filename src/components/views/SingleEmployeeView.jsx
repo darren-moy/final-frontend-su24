@@ -17,11 +17,25 @@ function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask 
   const [firstname, setFirstname] = useState(employee.firstname);
   const [lastname, setLastname] = useState(employee.lastname);
   const [department, setDepartment] = useState(employee.department);
+  const [validationErrors, setValidationErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!firstname.trim()) newErrors.firstname = "First name is required and cannot be empty.";
+    if (!lastname.trim()) newErrors.lastname = "Last name is required and cannot be empty.";
+    if (!department.trim()) newErrors.department = "Department is required and cannot be empty.";
+    return newErrors;
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSubmit({ firstname, lastname, department });
-    setEditMode(false);
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setValidationErrors(formErrors);
+    } else {
+      handleSubmit({ firstname, lastname, department });
+      setEditMode(false);
+    }
   };
 
   return (
@@ -38,7 +52,7 @@ function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask 
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
             />
-            {errors.firstname && <p style={{ color: "red" }}>{errors.firstname}</p>}
+            {validationErrors.firstname && <p style={{ color: "red" }}>{validationErrors.firstname}</p>}
           </label>
           <br />
           <label>
@@ -47,7 +61,7 @@ function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask 
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
             />
-            {errors.lastname && <p style={{ color: "red" }}>{errors.lastname}</p>}
+            {validationErrors.lastname && <p style={{ color: "red" }}>{validationErrors.lastname}</p>}
           </label>
           <br />
           <label>
@@ -56,7 +70,7 @@ function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask 
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
             />
-            {errors.department && <p style={{ color: "red" }}>{errors.department}</p>}
+            {validationErrors.department && <p style={{ color: "red" }}>{validationErrors.department}</p>}
           </label>
           <br />
           <button type="submit">Update Employee</button>

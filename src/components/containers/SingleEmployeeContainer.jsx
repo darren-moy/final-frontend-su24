@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import SingleEmployeeView from '../views/SingleEmployeeView';
-import { updateEmployee } from "../../store/employeesSlice";
-import { deleteTask } from "../../store/tasksSlice";
+import { updateEmployee, fetchEmployees } from "../../store/employeesSlice";
+import { deleteTask, fetchTasks } from "../../store/tasksSlice";
 
 function SingleEmployeeContainer() {
   const { employeeId } = useParams(); 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const employee = useSelector(state =>
-    state.employees.find(emp => emp.id === parseInt(employeeId))
-  );
-  
-  const tasks = useSelector(state => 
-    state.tasks.filter(task => task.employeeId === parseInt(employeeId))
-  );
+  const employees = useSelector(state => state.employees);
+  const tasks = useSelector(state => state.tasks);
+  const employee = employees.find(emp => emp.id === parseInt(employeeId));
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (employees.length === 0) {
+        await dispatch(fetchEmployees());
+      }
+      if (tasks.length === 0) {
+        await dispatch(fetchTasks());
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [dispatch, employees.length, tasks.length]);
 
   const validateForm = (data) => {
     const newErrors = {};
@@ -38,12 +50,23 @@ function SingleEmployeeContainer() {
 
   const handleDeleteTask = (taskId) => {
     dispatch(deleteTask(taskId));
+    navigate(`/employees/${employeeId}`);
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!employee) {
+    return <p>Employee not found!</p>;
+  }
+
+  const employeeTasks = tasks.filter(task => task.employeeId === parseInt(employeeId));
 
   return (
     <SingleEmployeeView 
       employee={employee} 
-      tasks={tasks} 
+      tasks={employeeTasks} 
       handleSubmit={handleSubmit} 
       errors={errors} 
       deleteTask={handleDeleteTask}
