@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function SingleTaskView({ task, handleSubmit, employees, errors }) {
     const [editMode, setEditMode] = useState(false);
@@ -9,6 +9,8 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
     const [completed, setCompleted] = useState(task?.completed || false);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const fromEmployee = location.state?.fromEmployee;
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -104,9 +106,15 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                 )}
             </article>
             <button onClick={() => setEditMode(!editMode)}>{editMode ? "Cancel Edit" : "Edit Task"}</button>
-            <Link to="/tasks">
-                <button>Go Back to All Tasks</button>
-            </Link>
+            {fromEmployee ? (
+                <Link to={`/employees/${fromEmployee}`}>
+                    <button>Back to Employee</button>
+                </Link>
+            ) : (
+                <Link to="/tasks">
+                    <button>Go Back to All Tasks</button>
+                </Link>
+            )}
         </section>
     );
 }
