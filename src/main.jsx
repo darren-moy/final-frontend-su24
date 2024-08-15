@@ -7,6 +7,7 @@ import AllTasksContainer from './components/containers/AllTasksContainer.jsx';
 import SingleTaskContainer from './components/containers/SingleTaskContainer.jsx';
 import NewTaskContainer from './components/containers/NewTaskContainer.jsx';
 import NewEmployeeContainer from './components/containers/NewEmployeeContainer.jsx'; // Import the NewEmployeeContainer
+import SingleEmployeeContainer from './components/containers/SingleEmployeeContainer.jsx';
 
 import './index.css';
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/employees/new", // Add the new route for creating an employee
     element: <NewEmployeeContainer />,
+  },
+  {
+    path: "/employees/:employeeId",  // New route for single employee view
+    element: <SingleEmployeeContainer />,
   },
   {
     path: "/tasks",

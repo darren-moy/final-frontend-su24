@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function NewTaskView({ handleSubmit, employees }) {
+function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
   const [taskContent, setTaskContent] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
-  const [employeeId, setEmployeeId] = useState("null");
+  const [employeeId, setEmployeeId] = useState(prefilledEmployeeId || "null");
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (prefilledEmployeeId) {
+      setEmployeeId(prefilledEmployeeId);
+    }
+  }, [prefilledEmployeeId]);
 
   const validateForm = () => {
     const newErrors = {};
