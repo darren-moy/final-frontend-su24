@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
   const [taskContent, setTaskContent] = useState("");
@@ -116,5 +117,20 @@ function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
     </section>
   );
 }
+
+NewTaskView.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  employees: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      firstname: PropTypes.string.isRequired,
+      lastname: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  prefilledEmployeeId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
+};
 
 export default NewTaskView;

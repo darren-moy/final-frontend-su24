@@ -25,7 +25,7 @@ const PATH = "http://localhost:5001/api/tasks";
 
 //Thunks
 
-// GET ALL TASKS
+// Fetch All Tasks 
 export const fetchTasks = () => async (dispatch) => {
   try {
     let res = await axios.get(`${PATH}`);
@@ -35,7 +35,7 @@ export const fetchTasks = () => async (dispatch) => {
   }
 };
 
-// DELETE TASK
+// Delete Task 
 export const deleteTask = taskId => async dispatch => {
   try {
     await axios.delete(`${PATH}/${taskId}`);
@@ -46,7 +46,7 @@ export const deleteTask = taskId => async dispatch => {
   }
 };
 
-// ADD TASK
+// Add Task 
 export const addTask = task => async (dispatch) => {
   try {
     let res = await axios.post(`${PATH}`, task);
@@ -57,7 +57,7 @@ export const addTask = task => async (dispatch) => {
   }
 };
 
-// EDIT TASK
+// Edit Task 
 export const editTask = task => async dispatch => {
   try {
     let res = await axios.put(`${PATH}/${task.id}`, task);

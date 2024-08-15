@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function SingleTaskView({ task, handleSubmit, employees, errors }) {
     const [editMode, setEditMode] = useState(false);
@@ -146,5 +147,30 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
         </section>
     );
 }
+
+SingleTaskView.propTypes = {
+    task: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        content: PropTypes.string.isRequired,
+        priority: PropTypes.number.isRequired,
+        employeeId: PropTypes.number,
+        completed: PropTypes.bool.isRequired,
+        employee: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            firstname: PropTypes.string.isRequired,
+            lastname: PropTypes.string.isRequired,
+        }),
+    }).isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    employees: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        firstname: PropTypes.string.isRequired,
+        lastname: PropTypes.string.isRequired,
+    })).isRequired,
+    errors: PropTypes.shape({
+        taskContent: PropTypes.string,
+        taskPriority: PropTypes.string,
+    }),
+};
 
 export default SingleTaskView;

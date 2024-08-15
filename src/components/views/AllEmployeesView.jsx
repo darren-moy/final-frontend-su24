@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function AllEmployeesView({ employees, deleteEmployee }) {
   if (!employees.length) {
@@ -27,5 +28,16 @@ function AllEmployeesView({ employees, deleteEmployee }) {
     </>
   );
 }
+
+AllEmployeesView.propTypes = {
+  employees: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      firstname: PropTypes.string.isRequired,
+      lastname: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  deleteEmployee: PropTypes.func.isRequired,
+};
 
 export default AllEmployeesView;
