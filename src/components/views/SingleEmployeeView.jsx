@@ -74,7 +74,9 @@ function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask 
         <ul>
           {tasks.map((task) => (
             <li key={task.id}>
-              {task.content}
+              <Link to={`/tasks/${task.id}`}>
+                {task.content}
+              </Link>
               <button onClick={() => deleteTask(task.id)}>Delete Task</button>
             </li>
           ))}
@@ -83,7 +85,6 @@ function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask 
         <p>No tasks assigned to this employee.</p>
       )}
 
-      {/* Link to Add Task page, passing the employeeId */}
       <Link to={`/tasks/new?employeeId=${employee.id}`}>
         <button style={{ marginTop: "16px" }}>Add Task for This Employee</button>
       </Link>
