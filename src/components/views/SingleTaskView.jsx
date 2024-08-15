@@ -6,6 +6,7 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
     const [taskContent, setTaskContent] = useState(task?.content || "");
     const [taskPriority, setTaskPriority] = useState(task?.priority?.toString() || "1");
     const [employeeId, setEmployeeId] = useState(task?.employeeId ? task.employeeId.toString() : "null");
+    const [completed, setCompleted] = useState(task?.completed || false);
 
     const navigate = useNavigate();
 
@@ -15,7 +16,8 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
             id: task.id, 
             content: taskContent, 
             priority: parseInt(taskPriority), 
-            employeeId: employeeId !== "null" ? parseInt(employeeId) : null 
+            employeeId: employeeId !== "null" ? parseInt(employeeId) : null,
+            completed
         });
         setEditMode(false);
     };
@@ -71,6 +73,17 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                             </select>
                         </label>
                         <br />
+                        <label>
+                            Completion Status:
+                            <select
+                                value={completed ? "completed" : "incomplete"}
+                                onChange={(e) => setCompleted(e.target.value === "completed")}
+                            >
+                                <option value="completed">Completed</option>
+                                <option value="incomplete">Incomplete</option>
+                            </select>
+                        </label>
+                        <br />
                         <button type="submit">Save Task</button>
                     </form>
                 ) : (
@@ -86,6 +99,7 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                                 " Unassigned"
                             )}
                         </p>
+                        <p>Completion Status: {task.completed ? "Completed" : "Incomplete"}</p>
                     </>
                 )}
             </article>
