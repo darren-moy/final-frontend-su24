@@ -1,5 +1,6 @@
 import './styles/all-tasks.css';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 let ulStyle = {
   border: "3px solid #0d0",
@@ -55,5 +56,21 @@ function AllTasksView({ tasks, deleteTask }) {
     </div>
   );
 }
+
+AllTasksView.propTypes = {
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      content: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      employee: PropTypes.shape({
+        id: PropTypes.number,
+        firstname: PropTypes.string,
+        lastname: PropTypes.string
+      })
+    })
+  ).isRequired,
+  deleteTask: PropTypes.func.isRequired
+};
 
 export default AllTasksView;

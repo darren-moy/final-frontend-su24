@@ -22,7 +22,9 @@ export function employeesReducer(state = initialState, action) {
 import axios from "axios";
 const PATH = "http://localhost:5001/api";
 
-//Thunk 
+//Thunks
+
+// fetchEmployees 
 export const fetchEmployees = () => async (dispatch) => {
   try {
     let res = await axios.get(`${PATH}/employees`);
@@ -32,6 +34,7 @@ export const fetchEmployees = () => async (dispatch) => {
   }
 };
 
+// addEmployee 
 export const addEmployee = (employee) => async (dispatch) => {
   try {
     let res = await axios.post(`${PATH}/employees`, employee);
@@ -41,6 +44,7 @@ export const addEmployee = (employee) => async (dispatch) => {
   }
 };
 
+// deleteEmployee 
 export const deleteEmployee = (employeeId) => async (dispatch) => {
   try {
     await axios.delete(`${PATH}/employees/${employeeId}`);
@@ -50,7 +54,7 @@ export const deleteEmployee = (employeeId) => async (dispatch) => {
   }
 };
 
-// Add this function to handle updating an employee
+// updateEmployee 
 export const updateEmployee = (employee) => async (dispatch) => {
   try {
     let res = await axios.put(`${PATH}/employees/${employee.id}`, employee);

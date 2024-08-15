@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask }) {
   if (!employee) {
@@ -109,5 +110,25 @@ function SingleEmployeeView({ employee, tasks, handleSubmit, errors, deleteTask 
     </section>
   );
 }
+
+SingleEmployeeView.propTypes = {
+  employee: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    firstname: PropTypes.string.isRequired,
+    lastname: PropTypes.string.isRequired,
+    department: PropTypes.string.isRequired,
+  }).isRequired,
+  tasks: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    content: PropTypes.string.isRequired,
+  })).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  errors: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+    department: PropTypes.string,
+  }),
+  deleteTask: PropTypes.func.isRequired,
+};
 
 export default SingleEmployeeView;
