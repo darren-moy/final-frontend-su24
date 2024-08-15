@@ -16,7 +16,7 @@ function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!taskContent) newErrors.taskContent = "Task description is required.";
+    if (!taskContent.trim()) newErrors.taskContent = "Task description is required and cannot be empty.";
     if (!taskPriority) newErrors.taskPriority = "Task priority level is required.";
     return newErrors;
   };
@@ -28,8 +28,8 @@ function NewTaskView({ handleSubmit, employees, prefilledEmployeeId }) {
       setErrors(formErrors);
     } else {
       handleSubmit({
-        content: taskContent,
-        taskPriority: parseInt(taskPriority),
+        content: taskContent.trim(),
+        priority: parseInt(taskPriority),
         employeeId: employeeId !== "null" ? parseInt(employeeId) : null,
         completed,
       });

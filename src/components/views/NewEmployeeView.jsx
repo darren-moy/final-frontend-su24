@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types"; // Import PropTypes
 
 function NewEmployeeView({ handleSubmit }) {
   const [firstname, setFirstname] = useState("");
@@ -69,5 +70,10 @@ function NewEmployeeView({ handleSubmit }) {
     </section>
   );
 }
+
+// Define prop types
+NewEmployeeView.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 export default NewEmployeeView;
