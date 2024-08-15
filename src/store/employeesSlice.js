@@ -4,11 +4,15 @@ const initialState = [];
 export function employeesReducer(state = initialState, action) {
     switch (action.type) {
       case 'employees/employeesLoaded':
-        return action.payload;
+        return action.payload.sort((a, b) => a.id - b.id);
       case 'employees/employeeAdded':
         return [...state, action.payload];
       case 'employees/employeeDeleted':
         return state.filter(employee => employee.id !== action.payload);
+      case 'employees/employeeUpdated':
+        return state.map(employee =>
+          employee.id === action.payload.id ? action.payload : employee
+        );
       default:
         return state;
     }
@@ -41,6 +45,16 @@ export const deleteEmployee = (employeeId) => async (dispatch) => {
   try {
     await axios.delete(`${PATH}/employees/${employeeId}`);
     dispatch({type: 'employees/employeeDeleted', payload: employeeId});
+  } catch(err) {
+    console.error(err);
+  }
+};
+
+// Add this function to handle updating an employee
+export const updateEmployee = (employee) => async (dispatch) => {
+  try {
+    let res = await axios.put(`${PATH}/employees/${employee.id}`, employee);
+    dispatch({type: 'employees/employeeUpdated', payload: res.data});
   } catch(err) {
     console.error(err);
   }

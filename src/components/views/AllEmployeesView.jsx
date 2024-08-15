@@ -15,7 +15,9 @@ function AllEmployeesView({ employees, deleteEmployee }) {
       <ul>
         {employees.map((user, idx) => (
           <li key={user.id}>
-            Employee #{idx + 1}: {user.firstname} {user.lastname}
+            <Link to={`/employees/${user.id}`}>
+              Employee #{idx + 1}: {user.firstname} {user.lastname}
+            </Link>
             <button onClick={() => deleteEmployee(user.id)}>Delete</button>
           </li>
         ))}

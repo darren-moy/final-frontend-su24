@@ -43,8 +43,8 @@ function AllTasksView({ tasks, deleteTask }) {
               <h5>
                 Assigned to: 
                 {todo.employee 
-                  ? `${todo.employee.firstname} ${todo.employee.lastname}` 
-                  : "No Employee Assigned"}
+                  ? ` ${todo.employee.firstname} ${todo.employee.lastname}` 
+                  : " Unassigned "}
               </h5>
               <h5>{todo.completed ? "COMPLETED" : "IN PROGRESS"}</h5>
               <button onClick={() => deleteTask(todo.id)}>Delete</button>
