@@ -1,0 +1,77 @@
+
+#background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url('/minion.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+.single-task-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.single-task-view .task {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.single-task-view .task hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.single-task-view .task-buttons {
+    margin-top: 20px; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.single-task-view button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+.single-task-view button:hover {
+    background-color: #0056b3;
+}
+
+.single-task-view button + button {
+    margin-top: 10px; 
+}
+
+.single-task-view .validation-error {
+    color: red;
+}
+
+.single-task-view .popup {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color: #4BB543;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

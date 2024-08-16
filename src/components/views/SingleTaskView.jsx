@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+import "./styles/SingleTaskView.css";
 
 function SingleTaskView({ task, handleSubmit, employees, errors }) {
     const [editMode, setEditMode] = useState(false);
@@ -10,6 +11,7 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
     const [completed, setCompleted] = useState(task?.completed || false);
     const [currentEmployee, setCurrentEmployee] = useState(task?.employee || null);
     const [validationErrors, setValidationErrors] = useState({});
+    const [showPopup, setShowPopup] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -40,6 +42,8 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
             const assignedEmployee = employees.find(emp => emp.id === updatedTask.employeeId);
             setCurrentEmployee(assignedEmployee || null);
             setEditMode(false);
+            setShowPopup(true);
+            setTimeout(() => setShowPopup(false), 2000);
         }
     };
 
@@ -67,24 +71,25 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
     let priorities = ["Low", "Medium", "High"];
 
     return (
-        <section>
+        <section className="single-task-view">
+            <div id="background"></div>
             <article className="task">
                 {editMode ? (
                     <form onSubmit={onSubmit}>
                         <label>
-                            Description: 
-                            <input 
+                            Description:
+                            <input
                                 value={taskContent}
-                                onChange={(e) => setTaskContent(e.target.value)} 
+                                onChange={(e) => setTaskContent(e.target.value)}
                             />
                             {validationErrors.taskContent && <p style={{ color: 'red' }}>{validationErrors.taskContent}</p>}
                         </label>
-                        <p> Priority level:
+                        <p>Priority level:
                             {priorities.map((priority, index) => (
                                 <label key={index}>
-                                    <input 
-                                        type="radio" 
-                                        value={index + 1} 
+                                    <input
+                                        type="radio"
+                                        value={index + 1}
                                         checked={taskPriority === (index + 1).toString()}
                                         onChange={(e) => setTaskPriority(e.target.value)}
                                     /> {priority}
@@ -92,8 +97,8 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                             ))}
                             {validationErrors.taskPriority && <p style={{ color: 'red' }}>{validationErrors.taskPriority}</p>}
                         </p>
-                        <label> Assign employee (optional):
-                            <select 
+                        <label>Assign employee (optional):
+                            <select
                                 value={employeeId}
                                 onChange={(e) => setEmployeeId(e.target.value)}
                             >
@@ -121,7 +126,7 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                     <>
                         <h2>{task.content}</h2>
                         <p>Priority: {priorities[task.priority - 1]}</p>
-                        <p>Assigned to: 
+                        <p>Assigned to:
                             {currentEmployee ? (
                                 <Link to={`/employees/${currentEmployee.id}`}>
                                     {currentEmployee.firstname} {currentEmployee.lastname}
@@ -133,16 +138,32 @@ function SingleTaskView({ task, handleSubmit, employees, errors }) {
                         <p>Completion Status: {task.completed ? "Completed" : "Incomplete"}</p>
                     </>
                 )}
+                <div className="task-buttons">
+                    <button onClick={() => setEditMode(!editMode)}>{editMode ? "Cancel Edit" : "Edit Task"}</button>
+                    {fromEmployee ? (
+                        <Link to={`/employees/${fromEmployee}`}>
+                            <button>Back to Employee</button>
+                        </Link>
+                    ) : (
+                        <Link to="/tasks">
+                            <button>Go Back to All Tasks</button>
+                        </Link>
+                    )}
+                </div>
             </article>
-            <button onClick={() => setEditMode(!editMode)}>{editMode ? "Cancel Edit" : "Edit Task"}</button>
-            {fromEmployee ? (
-                <Link to={`/employees/${fromEmployee}`}>
-                    <button>Back to Employee</button>
-                </Link>
-            ) : (
-                <Link to="/tasks">
-                    <button>Go Back to All Tasks</button>
-                </Link>
+            {showPopup && (
+                <div style={{
+                    position: 'fixed',
+                    top: '10px',
+                    right: '10px',
+                    padding: '10px',
+                    backgroundColor: '#4BB543',
+                    color: 'white',
+                    borderRadius: '5px',
+                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                }}>
+                    Task has been updated successfully!
+                </div>
             )}
         </section>
     );

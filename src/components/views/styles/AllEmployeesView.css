@@ -1,0 +1,97 @@
+.all-employees-view-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url('/bugsbunny.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+
+.all-employees-view-content {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.all-employees-view-container ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.all-employees-view-container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.all-employees-view-container li a {
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.all-employees-view-container li a:hover {
+    text-decoration: underline;
+}
+
+.all-employees-view-container li button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.all-employees-view-container li button:hover {
+    background-color: #0056b3;
+}
+
+.all-employees-view-container .bottom-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.all-employees-view-container .bottom-buttons button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.all-employees-view-container .bottom-buttons button:hover {
+    background-color: #0056b3;
+}

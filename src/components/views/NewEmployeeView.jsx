@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
+import "./styles/NewEmployeeView.css"; 
 
 function NewEmployeeView({ handleSubmit }) {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [department, setDepartment] = useState("");
   const [errors, setErrors] = useState({});
+  const [showPopup, setShowPopup] = useState(false); // State to control the popup visibility
 
   const validateForm = () => {
     const newErrors = {};
@@ -27,11 +29,13 @@ function NewEmployeeView({ handleSubmit }) {
       setLastname("");
       setDepartment("");
       setErrors({});
+      setShowPopup(true); // Show the popup after submission
+      setTimeout(() => setShowPopup(false), 2000); // Hide the popup after 2 seconds
     }
   };
 
   return (
-    <section>
+    <section className="new-employee-view">
       <h2>Add a New Employee</h2>
       <form onSubmit={onSubmit}>
         <label>
@@ -40,7 +44,7 @@ function NewEmployeeView({ handleSubmit }) {
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
           />
-          {errors.firstname && <p style={{ color: "red" }}>{errors.firstname}</p>}
+          {errors.firstname && <p className="error-text">{errors.firstname}</p>}
         </label>
         <br />
         <label>
@@ -49,7 +53,7 @@ function NewEmployeeView({ handleSubmit }) {
             value={lastname}
             onChange={(e) => setLastname(e.target.value)}
           />
-          {errors.lastname && <p style={{ color: "red" }}>{errors.lastname}</p>}
+          {errors.lastname && <p className="error-text">{errors.lastname}</p>}
         </label>
         <br />
         <label>
@@ -58,15 +62,22 @@ function NewEmployeeView({ handleSubmit }) {
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
           />
-          {errors.department && <p style={{ color: "red" }}>{errors.department}</p>}
+          {errors.department && <p className="error-text">{errors.department}</p>}
         </label>
         <br />
         <button type="submit">Add Employee</button>
       </form>
       <br />
       <Link to="/employees">
-        <button style={{ margin: "8px" }}>Back to All Employees</button>
+        <button className="back-button">Back to All Employees</button>
       </Link>
+
+      {/* Popup notification */}
+      {showPopup && (
+        <div className="popup-notification">
+          New employee has been added successfully!
+        </div>
+      )}
     </section>
   );
 }
