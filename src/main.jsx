@@ -27,11 +27,11 @@ const router = createBrowserRouter([
     element: <AllEmployeesContainer />,
   },
   {
-    path: "/employees/new", // Add the new route for creating an employee
+    path: "/employees/new", 
     element: <NewEmployeeContainer />,
   },
   {
-    path: "/employees/:employeeId",  // New route for single employee view
+    path: "/employees/:employeeId",  
     element: <SingleEmployeeContainer />,
   },
   {
