@@ -6,8 +6,9 @@ import AllEmployeesContainer from './components/containers/AllEmployeesContainer
 import AllTasksContainer from './components/containers/AllTasksContainer.jsx';
 import SingleTaskContainer from './components/containers/SingleTaskContainer.jsx';
 import NewTaskContainer from './components/containers/NewTaskContainer.jsx';
-import NewEmployeeContainer from './components/containers/NewEmployeeContainer.jsx'; // Import the NewEmployeeContainer
+import NewEmployeeContainer from './components/containers/NewEmployeeContainer.jsx'; 
 import SingleEmployeeContainer from './components/containers/SingleEmployeeContainer.jsx';
+import YouWon from './components/views/YouWon.jsx';
 
 import './index.css';
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
     path: "/tasks/new",
     element: <NewTaskContainer />,
   },
+  {
+    path: "you-won",
+    element: <YouWon />
+  }
 ]);
 
 //Redux

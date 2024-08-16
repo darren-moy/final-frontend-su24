@@ -1,0 +1,36 @@
+.you-won-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .you-won-container h1 {
+    font-size: 3em;
+    color: #4BB543;
+    margin-bottom: 20px;
+  }
+  
+  .you-won-container p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  .you-won-container button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .you-won-container button:hover {
+    background-color: #0056b3;
+  }
+  

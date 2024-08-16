@@ -1,18 +1,85 @@
-#bgview {
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+.all-tasks-view-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url('/cat-typing.gif'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.content-box {
+    background-color: rgba(255, 255, 255, 0.85); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    margin: 20px auto;
+    max-height: 80vh; /* Limit the height of the content box */
+    overflow-y: auto; /* Enable scrolling within the content box */
+}
+
+.task-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.task-item {
+    padding: 8px 16px;
+    border-bottom: 3px solid #0d0;
+    background-color: #e5f0e1;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-item h4 a {
+    color: blue; 
+    text-decoration: none;
+}
+
+.task-item h4 a:hover {
+    text-decoration: underline;
+}
+
+.task-item button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.task-item button:hover {
+    background-color: #ff0000;
+}
+
+.content-box button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+
+.content-box button:hover {
+    background-color: #0056b3;
 }
