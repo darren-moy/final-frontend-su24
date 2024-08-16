@@ -35,7 +35,7 @@ function App() {
   };
 
   const handleClick = () => {
-    navigate('/you-won');  // Navigate to the "/you-won" page
+    navigate('/you-won');  
   };
 
   return (
